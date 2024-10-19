@@ -1,6 +1,5 @@
 # Step 1: Import libraries
 import pandas as pd
-import df 
 import math
 
 # Step 2: Load the CSV data
