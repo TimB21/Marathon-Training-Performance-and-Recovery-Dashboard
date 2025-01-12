@@ -9,3 +9,5 @@ Outline the different graphs and analysis metrics.
 Post some of the graphs here. 
 
 Include a link to all of the resulting graphs. 
+
+jupyter nbconvert --to html "Script.ipynb"
