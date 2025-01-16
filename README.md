@@ -1,7 +1,7 @@
-# Running Data Analysis Project
+# Marathon Training Performance and Recovery Tracker
 
 ## Overview:
-This project is designed to analyze and improve running performance by tracking and visualizing various metrics such as pace, heart rate, distance, and performance scores. The analysis provides a holistic view of an athlete’s training patterns, offering insights into running efficiency, cardiovascular health, and training progress over time. By calculating key performance indicators such as performance scores, training stress scores (TSS), and analyzing cumulative mileage, this project helps optimize training plans, prevent injuries, and balance load for long-term improvement.
+This project is a personal tool designed to analyze and improve running performance by tracking and visualizing various metrics such as pace, heart rate, distance, and performance scores. The analysis provides a holistic view of my training patterns, offering insights into running efficiency, cardiovascular health, and training progress over time. By calculating key performance indicators such as performance scores, training stress scores (TSS), and analyzing cumulative mileage, this project helps optimize training plans, prevent injuries, and balance load for long-term improvement. 
 
 ## Key Features:
 ### 1. **Pace Analysis**:
@@ -40,6 +40,6 @@ This project is designed to analyze and improve running performance by tracking 
 
 ## Key Achievements:
 - **Enhanced Performance Insight**: Created custom performance scores that evaluate an athlete's progress and readiness for future runs.
-- **Comprehensive Data Analysis**: Provided multi-faceted analysis by combining pace, heart rate, and mileage, allowing for a better understanding of the athlete’s training load and recovery.
+- **Comprehensive Data Analysis**: Provided multi-faceted analysis by combining pace, heart rate, and mileage, allowing for a better understanding of the athlete’s performance training load and recovery.
 - **Preventing Injury**: By tracking cumulative mileage, monthly mileage, and load balance, the project helps prevent overtraining and reduce the risk of injury.
 - **Interactive Reporting**: Developed interactive dashboards for dynamic data exploration, which can be used to visualize and monitor running data trends.
