@@ -30,6 +30,11 @@ This project is a personal tool designed to analyze and improve running performa
    - Analyze **Acute Training Load (ATL)** and **Chronic Training Load (CTL)** to find the optimal balance between training intensity and recovery.
    - Visualizations of ATL and CTL trends help prevent overtraining and optimize recovery times.
 
+### 7. Clustering for Pattern Recognition:
+   - Machine learning techniques such as clustering are used to identify patterns in running sessions.  
+   - Group training sessions into clusters based on key metrics (pace, heart rate, distance) to detect trends and help optimize future training decisions.
+
+
 ## Technologies Used:
 - **Python**: Primary programming language for data processing and analysis.
 - **Pandas**: Used for data manipulation, cleaning, and analysis.
@@ -43,3 +48,4 @@ This project is a personal tool designed to analyze and improve running performa
 - **Comprehensive Data Analysis**: Provided multi-faceted analysis by combining pace, heart rate, and mileage, allowing for a better understanding of the athlete’s performance training load and recovery.
 - **Preventing Injury**: By tracking cumulative mileage, monthly mileage, and load balance, the project helps prevent overtraining and reduce the risk of injury.
 - **Interactive Reporting**: Developed interactive dashboards for dynamic data exploration, which can be used to visualize and monitor running data trends.
+- **Machine Learning Integration**: Integrated clustering algorithms to analyze training patterns and optimize performance tracking based on data-driven insights.
