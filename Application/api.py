@@ -1,9 +1,10 @@
-from flask import Flask, redirect, request, session
+from flask import Flask, redirect, request, session, jsonify
 import requests
 import os
 from dotenv import load_dotenv
 import json
 from datetime import datetime
+import pandas as pd
 
 load_dotenv()
 
@@ -164,6 +165,70 @@ def get_splits():
     # 💾 Save the splits to file
     save_to_file("splits_since_2025-05-25.json", all_splits)
     return f"Saved splits for {len(all_splits)} runs."
+
+@app.route('/fetch_runs', methods=['GET'])
+def get_runs():
+    columns_to_keep = [
+        'name',             # Run name
+        'start_date_local', # Local date/time string
+        'distance',         # Distance in meters
+        'moving_time',      # Moving time in seconds
+        'elapsed_time',     # Elapsed time in seconds
+        'total_elevation_gain', # Elevation gain in meters
+        'average_speed',    # m/s
+        'max_speed',        # m/s
+        'average_heartrate',# bpm
+        'max_heartrate',    # bpm
+        'average_cadence',  # cadence (steps per minute)
+        'kilojoules',       # energy
+        'start_lat',        # GPS start lat
+        'start_lng',        # GPS start lng
+        'end_lat',          # GPS end lat
+        'end_lng',          # GPS end lng
+        'map.id',             # For reference or building links
+        'map.summary_polyline'  # 🗺️ Encoded route
+    ]
+
+    # Load CSV
+    df = pd.read_csv('Data Processing/runs_filtered.csv')
+
+    # Filter columns
+    df_filtered = df[columns_to_keep]
+
+    # Convert to JSON (records = list of dicts)
+    runs_json = df_filtered.to_dict(orient='records')
+
+    return jsonify(runs_json)
+
+@app.route("/splits_by_run/<run_id>", methods=["GET"])
+def get_splits_by_run(run_id):
+    # Define relevant columns
+    split_columns = [
+        'distance',
+        'elapsed_time',
+        'elevation_difference',
+        'moving_time',
+        'split',
+        'average_speed',
+        'average_grade_adjusted_speed',
+        'pace_zone',
+        'run_id',
+        'average_heartrate'
+    ]
+
+    try:
+        # Load the CSV with all splits
+        splits_df = pd.read_csv("Data Processing/splits_processed.csv")
+
+        # Filter the splits for the given run_id
+        filtered = splits_df[splits_df['run_id'].astype(str) == str(run_id)]
+
+        # Only keep the desired columns
+        result = filtered[split_columns].to_dict(orient="records")
+
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
