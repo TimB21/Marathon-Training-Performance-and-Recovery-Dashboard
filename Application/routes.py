@@ -1,16 +1,15 @@
-from flask import Flask, redirect, request, session, jsonify
-import requests
+from flask import Blueprint, render_template, jsonify, request, redirect, url_for, flash, Flask, session
+
 import os
-from dotenv import load_dotenv
-import json
+import requests
 from datetime import datetime
 import pandas as pd
+import json
+from dotenv import load_dotenv
+
+strava = Blueprint('strava', __name__)
 
 load_dotenv()
-
-app = Flask(__name__)
-app.secret_key = 'a9f3b7c1d5e6428f9e1a4c7b0d3e8f21'  # change this in production
-
 CLIENT_ID = os.getenv("STRAVA_CLIENT_ID")
 CLIENT_SECRET = os.getenv("STRAVA_CLIENT_SECRET")
 REDIRECT_URI = "http://127.0.0.1:5000/authorize"
@@ -28,7 +27,7 @@ def load_from_file(filename):
             return json.load(f)
     return None
 
-@app.route('/')
+@strava.route('/')
 def home():
     return f'''
         <h2>Connect Your Strava Account</h2>
@@ -38,7 +37,7 @@ def home():
     '''
 
 # 30 Day Cache Activites 
-@app.route('/authorize')
+@strava.route('/authorize')
 def authorize():
     code = request.args.get('code')
     if not code:
@@ -57,7 +56,7 @@ def authorize():
 
     return f"✅ Connected! Your access token is:<br><code>{access_token}</code>"
 
-@app.route('/activities')
+@strava.route('/activities')
 def activities():
     access_token = session.get('access_token')
     if not access_token:
@@ -88,7 +87,7 @@ def activities():
 from flask import request
 
 # Access runs since specified date
-@app.route('/runs')
+@strava.route('/runs')
 def get_runs_since_date():
     access_token = session.get('access_token')
     if not access_token:
@@ -133,7 +132,7 @@ def get_runs_since_date():
 
     return f"Fetched and saved {len(runs)} runs since {start_date} into {filename}"
 
-@app.route('/splits')
+@strava.route('/splits')
 def get_splits():
     access_token = session.get('access_token')
     if not access_token:
@@ -166,7 +165,7 @@ def get_splits():
     save_to_file("splits_since_2025-05-25.json", all_splits)
     return f"Saved splits for {len(all_splits)} runs."
 
-@app.route('/fetch_runs', methods=['GET'])
+@strava.route('/fetch_runs', methods=['GET'])
 def get_runs():
     columns_to_keep = [
         'name',             # Run name
@@ -200,7 +199,7 @@ def get_runs():
 
     return jsonify(runs_json)
 
-@app.route("/splits_by_run/<run_id>", methods=["GET"])
+@strava.route("/splits_by_run/<run_id>", methods=["GET"])
 def get_splits_by_run(run_id):
     # Define relevant columns
     split_columns = [
@@ -229,7 +228,3 @@ def get_splits_by_run(run_id):
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
