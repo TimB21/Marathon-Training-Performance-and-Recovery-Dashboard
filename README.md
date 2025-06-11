@@ -1,5 +1,6 @@
 # Marathon Training Performance and Recovery Tracker
 
+Click [here](https://timb21.github.io/Marathon-Training-Performance-and-Recovery-Dashboard/Script/Script.html) to view the dashboard which displays the data
 ## Overview:
 This project is a personal tool designed to analyze and improve running performance by tracking and visualizing various metrics such as pace, heart rate, distance, and performance scores. The analysis provides a holistic view of my training patterns, offering insights into running efficiency, cardiovascular health, and training progress over time. By calculating key performance indicators such as performance scores, training stress scores (TSS), and analyzing cumulative mileage, this project helps optimize training plans, prevent injuries, and balance load for long-term improvement. 
 
