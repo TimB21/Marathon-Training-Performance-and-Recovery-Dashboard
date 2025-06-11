@@ -169,6 +169,7 @@ def get_splits():
 def get_runs():
     columns_to_keep = [
         'name',             # Run name
+        'id',
         'start_date_local', # Local date/time string
         'distance',         # Distance in meters
         'moving_time',      # Moving time in seconds
@@ -195,11 +196,51 @@ def get_runs():
     df_filtered = df[columns_to_keep]
 
     df_filtered = df_filtered.fillna(0) 
-    
+
     # Convert to JSON (records = list of dicts)
     runs_json = df_filtered.to_dict(orient='records')
 
     return jsonify(runs_json)
+
+@strava.route('/run/<int:run_id>', methods=['GET'])
+def get_run_by_id(run_id):
+    columns_to_keep = [
+        'map.id',  # used for lookup
+        'name',
+        'id',
+        'start_date_local',
+        'distance',
+        'moving_time',
+        'elapsed_time',
+        'total_elevation_gain',
+        'average_speed',
+        'max_speed',
+        'average_heartrate',
+        'max_heartrate',
+        'average_cadence',
+        'kilojoules',
+        'start_lat',
+        'start_lng',
+        'end_lat',
+        'end_lng',
+        'map.summary_polyline'
+    ]
+
+    # Load CSV
+    df = pd.read_csv('Data Processing/runs_filtered.csv')
+
+    # Filter columns
+    df_filtered = df[columns_to_keep]
+    
+    # Find run by ID
+    run = df_filtered[df_filtered['id'] == run_id]
+
+    if not run.empty:
+        run_dict = run.iloc[0].fillna(0).to_dict()
+        return jsonify(run_dict)
+    else:
+        return jsonify({'error': 'Run not found'}), 404
+
 
 @strava.route("/splits_by_run/<run_id>", methods=["GET"])
 def get_splits_by_run(run_id):

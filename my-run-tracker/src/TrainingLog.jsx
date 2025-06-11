@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function TrainingLog() {
   const [runs, setRuns] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -25,26 +27,26 @@ export default function TrainingLog() {
   if (error) return <p className="p-6 text-red-600">Error: {error}</p>;
 
   return (
-    <div className="overflow-x-auto">
-      <h1 className="text-3xl font-bold mb-6 text-white">Training Log</h1>
-      <table className="min-w-full bg-white shadow rounded-lg">
-        <thead>
-          <tr className="bg-gray-100 text-black">
-            <th className="border border-gray-300 px-4 py-2 text-left">Name</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Distance (mi)</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Moving Time</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Pace (min/mi)</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Avg Speed (mph)</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Elevation Gain (ft)</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Avg HR (bpm)</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Max HR (bpm)</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Cadence (spm)</th>
-            <th className="border border-gray-300 px-4 py-2 text-right">Energy (kJ)</th>
-          </tr>
+    <div className="overflow-x-auto mx-4 md:mx-12 lg:mx-24">
+    <h1 className="text-3xl font-bold mb-6 text-white text-center">Training Log</h1>
+    <table className="min-w-full bg-white shadow rounded-lg">
+      <thead>
+        <tr className="bg-gray-100 text-black">
+          <th className="border border-gray-300 px-4 py-2 text-left">Name</th>
+          <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Distance (mi)</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Moving Time</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Pace (min/mi)</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Avg Speed (mph)</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Elevation Gain (ft)</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Avg HR (bpm)</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Max HR (bpm)</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Cadence (spm)</th>
+          <th className="border border-gray-300 px-4 py-2 text-right">Energy (kJ)</th>
+        </tr>
         </thead>
         <tbody>
-          {runs.map((run, idx) => {
+          {runs.slice().reverse().map((run, idx) => {
             const distanceMiles = run.distance / 1609.34;
             const movingTimeMin = run.moving_time / 60;
   
@@ -68,10 +70,11 @@ export default function TrainingLog() {
             const paceMinPerMile = distanceMiles > 0 ? (movingTimeMin / distanceMiles) : 0;
   
             return (
-              <tr
+                <tr
                 key={idx}
                 className="even:bg-gray-50 hover:bg-gray-200 cursor-pointer text-black"
-              >
+                onClick={() => navigate(`/run/${run.id}`)} // assumes `run.id` is your unique ID
+                >
                 <td className="border border-gray-300 px-4 py-2">{run.name || 'Unnamed Run'}</td>
                 <td className="border border-gray-300 px-4 py-2">
                   {new Date(run.start_date_local).toLocaleString()}

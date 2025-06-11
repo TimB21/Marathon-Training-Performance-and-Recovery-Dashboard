@@ -1,13 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TrainingLog from './TrainingLog';
-import './App.css'
+import RunDetail from './RunDetail'; // You'll create this next
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return <TrainingLog />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<TrainingLog />} />
+        <Route path="/run/:id" element={<RunDetail />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
