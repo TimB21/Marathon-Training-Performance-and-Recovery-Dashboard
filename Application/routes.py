@@ -194,6 +194,8 @@ def get_runs():
     # Filter columns
     df_filtered = df[columns_to_keep]
 
+    df_filtered = df_filtered.fillna(0) 
+    
     # Convert to JSON (records = list of dicts)
     runs_json = df_filtered.to_dict(orient='records')
 

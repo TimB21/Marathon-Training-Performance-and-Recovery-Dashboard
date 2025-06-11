@@ -35,7 +35,7 @@ def create_app():
     # Enables CORS to allow request from specific frontend origins 
     # These origins are our local testing urls from codespaces, vscode, and the deployed react render url 
     CORS(app, origins=[
-    "http://localhost:3000"])
+    "http://localhost:5173"])
 
 
     app.register_blueprint(strava)
